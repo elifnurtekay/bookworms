@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yorumlar</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        a { color: #007BFF; text-decoration: none; margin-top: 20px; display: block; }
+        a:hover { text-decoration: underline; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>"{{ book.title }}" için Yorumlar</h1>
+    <ul>
+        {% for review in reviews %}
+        <li>
+            <strong>{{ review.user.username }}</strong> - Puan: {{ review.rating }}<br>
+            <p>{{ review.comment }}</p>
+            <small>{{ review.created_at }}</small>
+        </li>
+        {% empty %}
+        <li>Bu kitap için henüz bir yorum yapılmamış.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'reviews:add_review' book.id %}">
+        {% if request.user.loans.filter(book=book, returned=True).exists %}
+        <button>Yorum Ekle</button>
+        {% else %}
+        <button disabled style="background-color: grey;">Yorum Ekleyemezsiniz</button>
+        {% endif %}
+    </a>
+    <a href="{% url 'books:list_books' %}">Kitap Listesine Geri Dön</a>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Girişi</title>
+</head>
+<body>
+    <h1>Yönetici Girişi</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Giriş Yap</button>
+    </form>
+    <p>Kullanıcı girişine dönmek için <a href="{% url 'login_user' %}">tıklayın</a>.</p>
+</body>
+</html>

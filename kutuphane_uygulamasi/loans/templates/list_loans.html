@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödünç Alınan Kitaplar</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; margin: 5px 5px 0 0; }
+        button:hover { background-color: #45a049; }
+        a { color: #007BFF; text-decoration: none; margin-top: 20px; display: inline-block; }
+        a:hover { text-decoration: underline; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Ödünç Alınan Kitaplar</h1>
+    <ul>
+        {% for loan in loans %}
+        <li>
+            <strong>{{ loan.book.title }}</strong> - Teslim Tarihi: {{ loan.due_date }}
+            <div>
+                <!-- İade Et Butonu -->
+                <form method="post" action="{% url 'loans:return_book' loan.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">İade Et</button>
+                </form>
+
+                <!-- Yorum Ekle Butonu -->
+                <a href="{% url 'reviews:add_review' loan.book.id %}">
+                    <button>Yorum Ekle</button>
+                </a>
+
+                <!-- Yorumları Gör Butonu -->
+                <a href="{% url 'reviews:list_reviews' loan.book.id %}">
+                    <button>Yorumları Gör</button>
+                </a>
+            </div>
+        </li>
+        {% empty %}
+        <li>Henüz ödünç alınmış bir kitabınız yok.</li>
+        {% endfor %}
+    </ul>
+    <div style="margin-top: 20px;">
+        <a href="{% url 'loans:select_book_for_borrow' %}">
+            <button>Yeni Kitap Ödünç Al</button>
+        </a>
+        <a href="{% url 'books:list_books' %}">
+            <button>Kitap Listesine Geri Dön</button>
+        </a>
+    </div>
+</body>
+</html>

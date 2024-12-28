@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+</head>
+<body>
+    <h1>Giriş Yap</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Giriş Yap</button>
+    </form>
+    <p>Hesabınız yok mu? <a href="{% url 'register_user' %}">Kayıt Ol</a></p>
+    <p>Kütüphane yöneticisi misiniz? <a href="{% url 'login_library_admin' %}">Yönetici Girişi</a></p>
+</body>
+</html>

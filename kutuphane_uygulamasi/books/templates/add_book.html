@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Kitap Ekle</title>
+</head>
+<body>
+    <h1>Yeni Kitap Ekle</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Kaydet</button>
+    </form>
+    <a href="{% url 'books:list_books' %}">Geri Dön</a>
+</body>
+</html>
