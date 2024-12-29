@@ -26,7 +26,7 @@ def borrow_book(request, book_id):
             loan = form.save(commit=False)
             loan.user = request.user
             loan.book = book
-            loan.due_date = date.today() + timedelta(days=14)  # Teslim süresi 14 gün
+            loan.due_date = date.today() + timedelta(days=2)  # Teslim süresi 14 gün
             loan.save()
 
             # Kitap stok durumunu güncelle

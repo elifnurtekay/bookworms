@@ -5,7 +5,8 @@ from books.models import Book
 from users.models import CustomUser
 
 class Review(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reviews')
+    id = models.AutoField(primary_key=True)  # id alanı birincil anahtar olarak tanımlandı
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reviews')   #isbn
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
     rating = models.PositiveIntegerField()  # Puanlama 1-5 arası olabilir
     comment = models.TextField(blank=True)

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+                                                                                                                                                                                                                                      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,27 +10,43 @@
         button:hover { background-color: #45a049; }
         a { color: #007BFF; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        form { margin-bottom: 20px; }
+        input[type="text"] { padding: 8px; width: 300px; margin-right: 10px; }
     </style>
 </head>
 <body>
     <h1>Kütüphanedeki Kitaplar</h1>
+
+    <!-- Arama Formu -->
+    <form method="get" action="{% url 'books:search_books' %}">
+        <input type="text" name="query" placeholder="Kitap Ara..." value="{{ query }}">
+        <button type="submit">Ara</button>
+    </form>
+    
+    
+
+    {% if results %}
     <ul>
-        {% for book in books %}
-        <li>
-            <strong>{{ book.title }}</strong> - ISBN: {{ book.isbn }}
-            {% if book.stock_status > 0 %}
-                <form method="get" action="{% url 'loans:borrow_book' book.id %}" style="display: inline;">
-                    <button type="submit">Ödünç Al</button>
-                </form>
-            {% else %}
-                <span>Stokta Yok</span>
-            {% endif %}
-        </li>
+        {% for book in results %}
+            <li>
+                <strong>{{ book.title }}</strong> - ISBN: {{ book.isbn }}
+                {% if book.stock_status > 0 %}
+                    <form method="get" action="{% url 'loans:borrow_book' book.id %}" style="display: inline;">
+                        <button type="submit">Ödünç Al</button>
+                    </form>
+                {% else %}
+                    <span>Stokta Yok</span>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
+{% else %}
+    <p>Aradığınız kriterlere uygun kitap bulunamadı.</p>
+{% endif %}
+
+
     <a href="{% url 'loans:list_loans' %}">
         <button>Ödünç Alma İşlemleri</button>
     </a>
 </body>
 </html>
-

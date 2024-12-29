@@ -38,6 +38,9 @@ EMAIL_HOST_PASSWORD = 'your-email-password'
 
 DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 
 # Application definition
 
@@ -92,8 +95,12 @@ WSGI_APPLICATION = 'kutuphane_uygulamasi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'library_db',  # Oluşturduğunuz veritabanı adı
+        'USER': 'root',  # Veritabanı kullanıcı adı
+        'PASSWORD': 'Elif2119!',  # Veritabanı şifresi
+        'HOST': 'localhost',  # Veritabanı sunucusu (genelde localhost)
+        'PORT': '3306',  # MySQL'in varsayılan portu
     }
 }
 

@@ -32,8 +32,29 @@ def add_review(request, book_id):
     
     return render(request, 'add_review.html', {'form': form, 'book': book})
 
+
 @login_required
 def list_reviews(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     reviews = book.reviews.all()
-    return render(request, 'list_reviews.html', {'book': book, 'reviews': reviews})
+
+    # Kullanıcının bu kitabı ödünç alıp almadığını kontrol et
+    loan_exists = Loan.objects.filter(user=request.user, book=book, returned=True).exists()
+
+    return render(request, 'list_reviews.html', {
+        'book': book,
+        'reviews': reviews,
+        'loan_exists': loan_exists  # Sonucu şablona gönder
+    })
+
+
+
+
+
+
+
+"""@login_required
+def list_reviews(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    reviews = book.reviews.all()
+    return render(request, 'list_reviews.html', {'book': book, 'reviews': reviews})"""

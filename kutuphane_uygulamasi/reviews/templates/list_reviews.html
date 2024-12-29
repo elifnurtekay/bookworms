@@ -28,7 +28,7 @@
         {% endfor %}
     </ul>
     <a href="{% url 'reviews:add_review' book.id %}">
-        {% if request.user.loans.filter(book=book, returned=True).exists %}
+        {% if request.user.loans.filter(book=book, returned=True) %}
         <button>Yorum Ekle</button>
         {% else %}
         <button disabled style="background-color: grey;">Yorum Ekleyemezsiniz</button>

@@ -4,6 +4,7 @@ from users.models import CustomUser
 from books.models import Book
 
 class Loan(models.Model):
+    id = models.AutoField(primary_key=True)  # id alanı birincil anahtar olarak tanımlandı
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='loans')
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='loans')
     loan_date = models.DateField(auto_now_add=True)

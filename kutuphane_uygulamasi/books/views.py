@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
 from .forms import BookForm
 from django.http import HttpResponseForbidden
+from django.db.models import Q
 
 def list_books(request):
     books = Book.objects.all()
@@ -37,3 +38,17 @@ def delete_book(request, id):
         book.delete()
         return redirect('books:list_books')  # Namespace eklendi
     return render(request, 'delete_book.html', {'book': book})
+
+def search_books(request):
+    query = request.GET.get('query', '')
+    results = Book.objects.all()
+
+    if query:
+        results = results.filter(
+            Q(title__icontains=query) |
+            Q(isbn__icontains=query) |
+            Q(publication_year__icontains=query) |
+            Q(categories_name_icontains=query)
+        )
+
+    return render(request, 'list_books.html', {'results': results, 'query': query})
